@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trắc nghiệm Sử thi Đăm Săn</title>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;800&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f3ede2;--card:#fffdf8;--ink:#1d2340;--mute:#5d6280;--chm:#1d2340;--red:#b3342b;--ok:#2f7a4d;--okbg:#e2f1e7;--badbg:#f7e1de;--line:#d9cfbd;--gold:#d2a13a}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12162b;--card:#1c2240;--ink:#f1ece0;--mute:#a7abc6;--chm:#0b0e1e;--red:#e0675c;--ok:#6fcf93;--okbg:#1d3a2c;--badbg:#472427;--line:#343b63;--gold:#e0b552}}
+:root[data-theme="dark"]{--bg:#12162b;--card:#1c2240;--ink:#f1ece0;--mute:#a7abc6;--chm:#0b0e1e;--red:#e0675c;--ok:#6fcf93;--okbg:#1d3a2c;--badbg:#472427;--line:#343b63;--gold:#e0b552}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 "Be Vietnam Pro",system-ui,sans-serif}
+header{background:var(--chm);color:#f6efe0;padding:28px 20px 22px;text-align:center;position:relative}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:repeating-linear-gradient(90deg,var(--red) 0 24px,#f6efe0 24px 30px,var(--gold) 30px 54px,#f6efe0 54px 60px)}
+header h1{font:800 clamp(24px,5vw,36px)/1.2 Bitter,Georgia,serif;margin:0 0 6px}
+header p{margin:0;color:#c9cbe0;font-size:15px}
+main{max-width:680px;margin:0 auto;padding:24px 16px 48px}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:8px}
+.bar i{display:block;height:100%;width:0;background:var(--red);transition:width .3s}
+.meta{display:flex;justify-content:space-between;color:var(--mute);font-size:14px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 20px}
+h2{font:600 clamp(19px,4vw,23px)/1.4 Bitter,Georgia,serif;margin:0 0 18px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;font:inherit;color:inherit;background:transparent;border:2px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px;cursor:pointer;transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--red)}
+.opt:focus-visible,.btn:focus-visible,.theme:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.opt b{flex:none;width:28px;height:28px;border-radius:50%;background:var(--chm);color:#f6efe0;display:grid;place-items:center;font-size:14px}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--red);background:var(--badbg)}
+.opt.dim{opacity:.55}
+.exp{margin-top:6px;padding:12px 14px;border-left:4px solid var(--gold);background:var(--bg);border-radius:6px;font-size:15px}
+.exp strong{display:block;margin-bottom:2px}
+.btn{font:600 16px "Be Vietnam Pro",sans-serif;background:var(--red);color:#fff;border:0;border-radius:10px;padding:12px 24px;margin-top:16px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line);margin-left:8px}
+.score{font:800 64px/1 Bitter,Georgia,serif;color:var(--red);margin:6px 0}
+.rev{list-style:none;padding:0;margin:18px 0 0}
+.rev li{padding:10px 0;border-top:1px solid var(--line);font-size:15px}
+.rev .t{color:var(--ok);font-weight:600}.rev .f{color:var(--red);font-weight:600}
+.theme{position:absolute;top:12px;right:12px;background:transparent;border:1px solid #5a6088;color:#f6efe0;border-radius:8px;padding:4px 10px;font:14px "Be Vietnam Pro",sans-serif;cursor:pointer}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+<button class="theme" id="theme" aria-label="Đổi giao diện sáng/tối">Sáng/Tối</button>
+<h1>Sử thi Đăm Săn</h1>
+<p>Bài 4: Sức sống của sử thi · Tổ 2 · 10 câu trắc nghiệm</p>
+</header>
+<main id="app"></main>
+<script>
+const Q=[
+["Theo tục \"nối dây\" của người Ê-đê, Đăm Săn buộc phải lấy ai làm vợ?",["Chỉ H'Nhi","Cả hai chị em H'Nhi và H'Bhí","Nữ thần Mặt Trời","Chị ruột H'Ân"],1,"Theo tập tục hôn nhân cổ, Đăm Săn buộc phải lấy cả hai chị em H'Nhi và H'Bhí dù chàng đã có người yêu."],
+["Đăm Săn đã đánh thắng những tù trưởng nào, vốn âm mưu cướp vợ và hạ uy tín của chàng?",["Mơtao Gơrư và Mơtao Mơxày","Mơtao Gơrư và H'Ân","Đam San và Mơtao Mơxày","Hai tù trưởng người Pháp"],0,"Chiến thắng giúp chàng có vô số của cải, gia súc, nô lệ và trở thành tù trưởng hùng mạnh nhất vùng."],
+["Sau khi chết, hồn Đăm Săn đầu thai theo cách nào?",["Hóa thành con ngựa bay lên trời","Hóa thành cây thần trong rừng sáp đen","Hóa thành con ruồi bay vào miệng chị ruột H'Ân","Nhập vào người H'Nhi"],2,"Chị H'Ân sinh ra đứa bé tên Đam San, người tiếp tục công việc của cậu."],
+["Bản sử thi Đăm Săn trong slide do ai dịch và dịch từ ngôn ngữ nào?",["Đào Tử Chí, từ tiếng Pháp sang tiếng Việt","Đào Tử Chí, từ tiếng Ê-đê sang tiếng Việt","Nguyễn Ái Trà My, từ tiếng Pháp sang tiếng Việt","Amy Fletcher, từ tiếng Anh sang tiếng Việt"],0,"Slide 5 nêu tác phẩm được Đào Tử Chí dịch từ tiếng Pháp sang tiếng Việt."],
+["Theo tục chuê nuê, khi vợ mất thì người chồng phải làm gì?",["Trở về sống trong gia đình mình","Sống một mình suốt đời","Lấy một người con gái chưa chồng trong gia đình vợ (em hoặc chị)","Nhường quyền làm chủ cho con trai"],2,"Ngược lại, khi chồng mất, gia đình chồng phải đưa người em trai chưa chồng sang thay thế."],
+["Trong chế độ mẫu hệ của người Ê-đê, người phụ nữ giữ vai trò gì?",["Chỉ lo việc nội trợ, không quyết định việc lớn","Làm tù trưởng và chỉ huy chiến tranh","Làm chủ gia đình và quyết định mọi công việc lớn nhỏ trong dòng họ","Chỉ giữ vai trò cúng tế"],2,"Mẫu hệ là nét văn hóa đặc trưng, nơi người phụ nữ làm chủ gia đình và quyết định mọi việc trong dòng họ."],
+["Khi Đăm Săn ngỏ ý lấy Nữ thần Mặt Trời, nàng đã phản ứng thế nào?",["Đồng ý ngay và đưa chàng về trời","Từ chối và cảnh báo khi Mặt Trời lên, chàng sẽ không thể trở về an toàn","Thách chàng đánh thắng các tù trưởng","Không trả lời"],1,"Đăm Săn vẫn không từ bỏ ý định, tiếp tục hành trình và cuối cùng chết trên đường trở về."],
+["Tác phẩm phản ánh dấu ấn mẫu hệ nhưng đồng thời cho thấy điều gì?",["Sự suy yếu của người Ê-đê","Sự biến mất hoàn toàn của phong tục cũ","Sự trỗi dậy mạnh mẽ của quyền lực nam giới (tù trưởng quân sự)","Sự thống trị của thần linh"],2,"Đây là quá trình chuyển đổi dần sang chế độ phụ quyền."],
+["Việc cúng tế trong sử thi phản ánh tín ngưỡng nào của cư dân Tây Nguyên?",["Thờ cúng tổ tiên","Tín ngưỡng vạn vật hữu linh","Đạo Phật","Thờ Mẫu"],1,"Người dân tin mọi chiến thắng, bình yên, mùa màng bội thu đều có sự chứng giám và phù hộ của các vị thần."],
+["Kết luận về mối quan hệ giữa con người, thiên nhiên và thần linh trong thế giới sử thi là gì?",["Hoàn toàn đối đầu nhau","Hoàn toàn tách biệt nhau","Thần linh và thiên nhiên luôn phục tùng con người","Vừa đối đầu, vừa gắn bó với nhau"],3,"Đăm Săn muốn chinh phục tự nhiên (đối đầu) nhưng cũng nhận trợ giúp của thần linh và sống hài hòa với thế giới ấy (gắn bó)."]
+];
+const app=document.getElementById("app"),L="ABCD";
+let i=0,score=0,ans=[];
+function show(){
+ const q=Q[i];
+ app.innerHTML=`<div class="bar"><i style="width:${i/Q.length*100}%"></i></div>
+ <div class="meta"><span>Câu ${i+1}/${Q.length}</span><span>Đúng: ${score}</span></div>
+ <div class="card"><h2>${q[0]}</h2><div id="o">${q[1].map((t,k)=>`<button class="opt" data-k="${k}"><b>${L[k]}</b><span>${t}</span></button>`).join("")}</div><div id="f"></div></div>`;
+ document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(+b.dataset.k));
+}
+function pick(k){
+ const q=Q[i],good=k===q[2];
+ if(good)score++;ans.push(good);
+ document.querySelectorAll(".opt").forEach((b,n)=>{b.disabled=true;b.classList.add(n===q[2]?"ok":n===k?"bad":"dim")});
+ document.getElementById("f").innerHTML=`<div class="exp"><strong>${good?"Chính xác!":"Chưa đúng. Đáp án: "+L[q[2]]}</strong>${q[3]}</div><button class="btn" id="n">${i<Q.length-1?"Câu tiếp theo":"Xem kết quả"}</button>`;
+ const n=document.getElementById("n");n.focus();
+ n.onclick=()=>{i++;i<Q.length?show():end()};
+}
+function end(){
+ const msg=score>=9?"Xuất sắc, bạn nắm rất chắc bài!":score>=6?"Khá tốt, xem lại vài câu bên dưới nhé.":"Hãy đọc lại slide rồi thử lại.";
+ app.innerHTML=`<div class="bar"><i style="width:100%"></i></div><div class="card" style="text-align:center"><div>Kết quả của bạn</div><div class="score">${score}/${Q.length}</div><p>${msg}</p>
+ <button class="btn" id="r">Làm lại</button><button class="btn alt" id="w">Chỉ xem câu sai</button>
+ <ul class="rev" style="text-align:left" id="rv">${Q.map((q,k)=>`<li data-ok="${ans[k]}"><span class="${ans[k]?"t":"f"}">${ans[k]?"Đúng":"Sai"}</span> · Câu ${k+1}: ${q[1][q[2]]}</li>`).join("")}</ul></div>`;
+ document.getElementById("r").onclick=()=>{i=0;score=0;ans=[];show()};
+ document.getElementById("w").onclick=e=>{const hide=e.target.dataset.on!=="1";e.target.dataset.on=hide?"1":"";e.target.textContent=hide?"Xem tất cả":"Chỉ xem câu sai";document.querySelectorAll("#rv li").forEach(l=>l.style.display=hide&&l.dataset.ok==="true"?"none":"")};
+}
+document.getElementById("theme").onclick=()=>{const r=document.documentElement,d=getComputedStyle(r).getPropertyValue("--bg").trim()==="#12162b";r.dataset.theme=d?"light":"dark"};
+show();
+</script>
+</body>
+</html>
